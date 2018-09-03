@@ -13,7 +13,7 @@ class PrefUtil {
             return 1
         }
 
-        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "development.iwa.timer.previous_timer_length_seconds"
+        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "com.resocoder.timer.previous_timer_length_seconds"
 
         fun getPreviousTimerLengthSeconds(context: Context): Long{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -27,7 +27,7 @@ class PrefUtil {
         }
 
 
-        private const val TIMER_STATE_ID = "development.iwa.timer.timer_state"
+        private const val TIMER_STATE_ID = "com.resocoder.timer.timer_state"
 
         fun getTimerState(context: Context): TimerActivity.TimerState{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -43,7 +43,7 @@ class PrefUtil {
         }
 
 
-        private const val SECONDS_REMAINING_ID = "development.iwa.timer.seconds_remaining"
+        private const val SECONDS_REMAINING_ID = "com.resocoder.timer.seconds_remaining"
 
         fun getSecondsRemaining(context: Context): Long{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -53,6 +53,20 @@ class PrefUtil {
         fun setSecondsRemaining(seconds: Long, context: Context){
             val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
             editor.putLong(SECONDS_REMAINING_ID, seconds)
+            editor.apply()
+        }
+
+
+        private const val ALARM_SET_TIME_ID = "com.resocoder.timer.backgrounded_time"
+
+        fun getAlarmSetTime(context: Context): Long{
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return  preferences.getLong(ALARM_SET_TIME_ID, 0)
+        }
+
+        fun setAlarmSetTime(time: Long, context: Context){
+            val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            editor.putLong(ALARM_SET_TIME_ID, time)
             editor.apply()
         }
     }
