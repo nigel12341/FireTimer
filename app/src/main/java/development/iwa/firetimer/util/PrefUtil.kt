@@ -8,12 +8,14 @@ import development.iwa.firetimer.TimerActivity
 class PrefUtil {
     companion object {
 
-        fun getTimerLength(context: Context): Int{
-            //placeholder
-            return 1
+        private const val TIMER_LENGTH_ID = "development.iwa.firetimer.timer_length"
+        fun getTimerLength(context: Context): Int {
+            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+            return preferences.getInt(TIMER_LENGTH_ID, 10)
         }
 
-        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "com.resocoder.timer.previous_timer_length_seconds"
+
+        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "development.iwa.firetimer.previous_timer_length_seconds"
 
         fun getPreviousTimerLengthSeconds(context: Context): Long{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)

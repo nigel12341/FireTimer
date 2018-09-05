@@ -18,7 +18,7 @@ import java.util.*
 class TimerActivity : AppCompatActivity() {
 
     companion object {
-        fun setAlarm(context: Context, nowSeconds: Long, secondsRemaining: Long): Long{
+        fun setAlarm(context: Context, nowSeconds: Long, secondsRemaining: Long): Long {
             val wakeUpTime = (nowSeconds + secondsRemaining) * 1000
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val intent = Intent(context, TimerExpiredReceiver::class.java)
@@ -28,7 +28,7 @@ class TimerActivity : AppCompatActivity() {
             return wakeUpTime
         }
 
-        fun removeAlarm(context: Context){
+        fun removeAlarm(context: Context) {
             val intent = Intent(context, TimerExpiredReceiver::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -40,7 +40,7 @@ class TimerActivity : AppCompatActivity() {
             get() = Calendar.getInstance().timeInMillis / 1000
     }
 
-    enum class TimerState{
+    enum class TimerState {
         Stopped, Paused, Running
     }
 
@@ -57,9 +57,9 @@ class TimerActivity : AppCompatActivity() {
         supportActionBar?.setIcon(R.drawable.ic_timer)
         supportActionBar?.title = "      Timer"
 
-        fab_start.setOnClickListener{v ->
+        fab_start.setOnClickListener { v ->
             startTimer()
-            timerState =  TimerState.Running
+            timerState = TimerState.Running
             updateButtons()
         }
 
@@ -87,12 +87,11 @@ class TimerActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        if (timerState == TimerState.Running){
+        if (timerState == TimerState.Running) {
             timer.cancel()
             val wakeUpTime = setAlarm(this, nowSeconds, secondsRemaining)
             NotificationUtil.showTimerRunning(this, wakeUpTime)
-        }
-        else if (timerState == TimerState.Paused){
+        } else if (timerState == TimerState.Paused) {
             NotificationUtil.showTimerPaused(this)
         }
 
@@ -101,7 +100,7 @@ class TimerActivity : AppCompatActivity() {
         PrefUtil.setTimerState(timerState, this)
     }
 
-    private fun initTimer(){
+    private fun initTimer() {
         timerState = PrefUtil.getTimerState(this)
 
         //we don't want to change the length of the timer which is already running
@@ -129,7 +128,7 @@ class TimerActivity : AppCompatActivity() {
         updateCountdownUI()
     }
 
-    private fun onTimerFinished(){
+    private fun onTimerFinished() {
         timerState = TimerState.Stopped
 
         //set the length of the timer to be the one set in SettingsActivity
@@ -145,7 +144,7 @@ class TimerActivity : AppCompatActivity() {
         updateCountdownUI()
     }
 
-    private fun startTimer(){
+    private fun startTimer() {
         timerState = TimerState.Running
 
         timer = object : CountDownTimer(secondsRemaining * 1000, 1000) {
@@ -158,18 +157,18 @@ class TimerActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun setNewTimerLength(){
+    private fun setNewTimerLength() {
         val lengthInMinutes = PrefUtil.getTimerLength(this)
         timerLengthSeconds = (lengthInMinutes * 60L)
         progress_countdown.max = timerLengthSeconds.toInt()
     }
 
-    private fun setPreviousTimerLength(){
+    private fun setPreviousTimerLength() {
         timerLengthSeconds = PrefUtil.getPreviousTimerLengthSeconds(this)
         progress_countdown.max = timerLengthSeconds.toInt()
     }
 
-    private fun updateCountdownUI(){
+    private fun updateCountdownUI() {
         val minutesUntilFinished = secondsRemaining / 60
         val secondsInMinuteUntilFinished = secondsRemaining - minutesUntilFinished * 60
         val secondsStr = secondsInMinuteUntilFinished.toString()
@@ -177,9 +176,9 @@ class TimerActivity : AppCompatActivity() {
         progress_countdown.progress = (timerLengthSeconds - secondsRemaining).toInt()
     }
 
-    private fun updateButtons(){
+    private fun updateButtons() {
         when (timerState) {
-            TimerState.Running ->{
+            TimerState.Running -> {
                 fab_start.isEnabled = false
                 fab_pause.isEnabled = true
                 fab_stop.isEnabled = true
@@ -209,7 +208,11 @@ class TimerActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
