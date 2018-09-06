@@ -20,7 +20,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_timer" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_timer" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_stop"
@@ -45,5 +47,15 @@
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_bigger_margin"
         app:srcCompat="@drawable/ic_play_arrow" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3665526460847378/6653609628"/>
 
 </android.support.design.widget.CoordinatorLayout>

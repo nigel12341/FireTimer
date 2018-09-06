@@ -9,6 +9,9 @@ import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import development.iwa.firetimer.util.NotificationUtil
 import development.iwa.firetimer.util.PrefUtil
 import kotlinx.android.synthetic.main.activity_timer.*
@@ -16,6 +19,7 @@ import kotlinx.android.synthetic.main.content_timer.*
 import java.util.*
 
 class TimerActivity : AppCompatActivity() {
+
 
     companion object {
         fun setAlarm(context: Context, nowSeconds: Long, secondsRemaining: Long): Long {
@@ -47,10 +51,11 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var timer: CountDownTimer
     private var timerLengthSeconds: Long = 0
     private var timerState = TimerState.Stopped
-
+    lateinit var mAdView : AdView
     private var secondsRemaining: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        MobileAds.initialize(this, "ca-app-pub-3665526460847378~2084751174")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
         setSupportActionBar(toolbar)
@@ -73,6 +78,9 @@ class TimerActivity : AppCompatActivity() {
             timer.cancel()
             onTimerFinished()
         }
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onResume() {

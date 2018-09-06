@@ -24,7 +24,7 @@
         android:id="@+id/fragment"
         android:name="development.iwa.firetimer.SettingsActivityFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_height="510dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
