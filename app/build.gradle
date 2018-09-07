@@ -10,8 +10,8 @@ android {
         applicationId "development.iwa.firetimer"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 5
-        versionName "2.2"
+        versionCode 6
+        versionName "2.2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
@@ -36,4 +36,5 @@ dependencies {
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
     implementation 'com.android.support:preference-v7:26.1.0'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.android.billingclient:billing:1.1'
 }
